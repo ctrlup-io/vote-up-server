@@ -1,0 +1,60 @@
+{
+  "name": "vote-up-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "commit": "git-cz",
+    "format": "prettier --write {*,src/**/*}.{js,json,md,html}",
+    "lint": "eslint --cache .",
+    "release:dry": "multi-semantic-release --dry-run",
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,json,md,html}": "prettier --write",
+    "package.json": "sort-package-json"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 13,
+      "sourceType": "module"
+    }
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "dependencies": {
+    "@firebase/app-compat": "^0.1.20",
+    "@firebase/app-types": "^0.7.0",
+    "boxen": "^6.2.1",
+    "chalk": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "firebase-admin": "^10.0.2",
+    "node-fetch": "^3.2.3",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@qiwi/multi-semantic-release": "^6.0.2",
+    "eslint": "^8.11.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.0",
+    "semantic-release": "^19.0.2",
+    "sort-package-json": "^1.55.0",
+    "typescript": "^4.6.2"
+  }
+}

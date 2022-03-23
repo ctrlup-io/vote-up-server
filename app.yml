@@ -1,0 +1,6 @@
+runtime: nodejs16 # or another supported version
+
+env_variables:
+  NODE_ENV: production
+  APP_URI: https://vote-up.netlify.app
+  GOOGLE_APPLICATION_CREDENTIALS:
