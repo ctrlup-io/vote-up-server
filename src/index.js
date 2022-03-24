@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/votes", async (req, res) => {
-  const snapshot = await votes.limit(50).get();
+  const snapshot = await votes.orderBy('count', 'desc').limit(50).get();
   if (snapshot.empty) {
     res.json([]);
   } else {
