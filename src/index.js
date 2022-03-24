@@ -49,6 +49,12 @@ io.on("connection", (socket) => {
       }
     }
   });
+
+  socket.on("add", async (payload) => {
+    const res = await votes.doc().set({ ...payload, count: 0, createdAt: Date.now() });
+    io.emit("added")
+    console.log(chalk.bold(`💡  New proposal`));
+  });
 });
 
 app.get("/votes", async (req, res) => {
