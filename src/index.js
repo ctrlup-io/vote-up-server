@@ -50,17 +50,34 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("participate", async (payload) => {
+    const id = payload.id;
+    if (id) {
+      const ref = votes.doc(id);
+      const doc = await ref.get();
+      if (doc.exists) {
+        const prev = doc.data()?.contact || [];
+        const contact = [...prev, payload.contact];
+        await ref.update({ contact });
+        io.emit("participated", { id, contact });
+        console.log(chalk.bold(`🖐️  New participant for ${id}`));
+      }
+    }
+  });
+
   socket.on("add", async (payload) => {
-    const res = await votes.doc().set({ ...payload, count: 0, createdAt: Date.now() });
-    io.emit("added")
+    const res = await votes
+      .doc()
+      .set({ ...payload, count: 0, createdAt: Date.now() });
+    io.emit("added");
     console.log(chalk.bold(`💡  New proposal`));
   });
 });
 
 app.get("/votes", async (req, res) => {
   const limit = parseInt(req.query.limit) || 50;
-  const sort = req.query.sort || 'createdAt';
-  const snapshot = await votes.orderBy(sort, 'desc').limit(limit).get();
+  const sort = req.query.sort || "createdAt";
+  const snapshot = await votes.orderBy(sort, "desc").limit(limit).get();
   if (snapshot.empty) {
     res.json([]);
   } else {
