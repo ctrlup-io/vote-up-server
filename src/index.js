@@ -32,7 +32,7 @@ const io = new Server(server, { cors: { origin } });
 io.on("connection", (socket) => {
   console.log(chalk.bold(`👋  New participant ${socket.id}`));
 
-  socket.on("disonnect", () => {
+  socket.on("disconnect", () => {
     console.log(chalk.bold(`👋  Bye ${socket.id}`));
   });
 
